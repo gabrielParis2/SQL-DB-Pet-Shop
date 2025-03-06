@@ -1,0 +1,14 @@
+-- 1.1  Liste a quantidade de atendimentos realizados para cada animal, ordenando pelo número total de atendimentos.
+	select donos.nome, sum(servicos.preco) from servicos inner join donos on donos.id = servicos.id_dono group by donos.nome order by sum(servicos.preco) desc limit 3;
+
+-- 1.2 Liste os funcionários que realizaram mais de 5 atendimentos.
+	select funcionarios.nome, count(*) from atendimentos inner join funcionarios on funcionarios.id_funcionario = atendimentos.id_funcionario group by id_funcionario having count(*)>= 5 order by count(*) desc;
+
+-- 1.3 Liste os clientes que nunca usaram um serviço na pet shop. (essa questão me pegou na lógica pois só está retornando os valores presentes na tabela )
+	select donos.nome from servicos inner join donos on donos.id = servicos.id_dono where servicos.id_dono != donos.id group by id_dono;  
+
+-- 1.3 CORREÇÃO - Na próxima vez lembrar das funções especificas ao invés de tentar usar operador lógico(hahaha)
+	select donos.nome from donos left join servicos on donos.id = servicos.id_dono where servicos.id_dono is null;
+
+-- 1.4 Mostre os 2 funcionários com mais registros na tabela assistência.
+	select funcionarios.nome, count(*) from assistencia inner join funcionarios on funcionarios.id_funcionario = assistencia.id_funcionario group by assistencia.id_funcionario order by total_assistencias desc limit 2;
